@@ -1,0 +1,16 @@
+HTTP/1.1 200 OK
+Cache-Control: private
+Content-Length: 15445
+Content-Type: text/html; charset=utf-8
+Expires: Tue, 10 Jun 2014 08:16:09 GMT
+Vary: Accept-Encoding
+Server: BWS/1.1 Microsoft-HTTPAPI/2.0
+Cxy_all: baidu+e4a53df3a58897c61662f2b11a4aad45
+BDPAGETYPE: 1
+BDQID: 0xfa17b2da00011799
+BDUSERID: 0
+Set-Cookie: BDSVRTM=0; path=/,H_PS_PSSID=5609_1439_5223_6505_4760_6017_6998_6931_7018_6772_6819; path=/; domain=.baidu.com
+X-Powered-By: HPHP
+Date: Tue, 10 Jun 2014 08:15:53 GMT
+
+hello world!

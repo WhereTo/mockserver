@@ -1,0 +1,10 @@
+D:\WorkShop\JDTestSVN\AllenChen\ICSON Monitor\MockServer\MockServer\bin\Debug\MockServer.exe.config
+D:\WorkShop\JDTestSVN\AllenChen\ICSON Monitor\MockServer\MockServer\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\WorkShop\JDTestSVN\AllenChen\ICSON Monitor\MockServer\MockServer\bin\Debug\MockServer.exe
+D:\WorkShop\JDTestSVN\AllenChen\ICSON Monitor\MockServer\MockServer\bin\Debug\MockServer.pdb
+D:\WorkShop\JDTestSVN\AllenChen\ICSON Monitor\MockServer\MockServer\bin\Debug\FiddlerCore4.dll
+D:\WorkShop\JDTestSVN\AllenChen\ICSON Monitor\MockServer\MockServer\bin\Debug\FiddlerCore4.xml
+D:\WorkShop\JDTestSVN\AllenChen\ICSON Monitor\MockServer\MockServer\obj\x86\Debug\MockServer.exe
+D:\WorkShop\JDTestSVN\AllenChen\ICSON Monitor\MockServer\MockServer\obj\x86\Debug\MockServer.pdb
+D:\WorkShop\JDTestSVN\AllenChen\ICSON Monitor\MockServer\MockServer\bin\Debug\Responses\1.txt
+D:\WorkShop\JDTestSVN\AllenChen\ICSON Monitor\MockServer\MockServer\bin\Debug\Rules.txt
