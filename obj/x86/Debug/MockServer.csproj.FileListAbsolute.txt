@@ -8,3 +8,20 @@ D:\WorkShop\JDTestSVN\AllenChen\ICSON Monitor\MockServer\MockServer\obj\x86\Debu
 D:\WorkShop\JDTestSVN\AllenChen\ICSON Monitor\MockServer\MockServer\obj\x86\Debug\MockServer.pdb
 D:\WorkShop\JDTestSVN\AllenChen\ICSON Monitor\MockServer\MockServer\bin\Debug\Responses\1.txt
 D:\WorkShop\JDTestSVN\AllenChen\ICSON Monitor\MockServer\MockServer\bin\Debug\Rules.txt
+C:\Users\Administrator\Downloads\mockserver_sourceCode\bin\Debug\MockServer.exe.config
+C:\Users\Administrator\Downloads\mockserver_sourceCode\obj\x86\Debug\MockServer.exe
+C:\Users\Administrator\Downloads\mockserver_sourceCode\obj\x86\Debug\MockServer.pdb
+C:\Users\Administrator\Downloads\mockserver_sourceCode\bin\Debug\Responses\1.txt
+C:\Users\Administrator\Downloads\mockserver_sourceCode\bin\Debug\Rules.txt
+C:\Users\Administrator\Downloads\mockserver_sourceCode\bin\Debug\MockServer.exe
+C:\Users\Administrator\Downloads\mockserver_sourceCode\bin\Debug\MockServer.pdb
+C:\Users\Administrator\Downloads\mockserver_sourceCode\bin\Debug\FiddlerCore4.xml
+C:\Users\Administrator\Downloads\mockserver_sourceCode\obj\x86\Debug\MockServer.csprojResolveAssemblyReference.cache
+D:\android测试资料\mockserver_sourceCode\bin\Debug\Responses\1.txt
+D:\android测试资料\mockserver_sourceCode\bin\Debug\Rules.txt
+D:\android测试资料\mockserver_sourceCode\bin\Debug\MockServer.exe.config
+D:\android测试资料\mockserver_sourceCode\bin\Debug\MockServer.exe
+D:\android测试资料\mockserver_sourceCode\bin\Debug\MockServer.pdb
+D:\android测试资料\mockserver_sourceCode\obj\x86\Debug\MockServer.csprojResolveAssemblyReference.cache
+D:\android测试资料\mockserver_sourceCode\obj\x86\Debug\MockServer.exe
+D:\android测试资料\mockserver_sourceCode\obj\x86\Debug\MockServer.pdb

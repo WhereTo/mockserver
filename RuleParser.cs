@@ -176,6 +176,7 @@ namespace MockServer
       const string URL_MAP_TYPE_CONTAINS = "contains";
       const string CONVERT_TAG = "[convert]";
       const string BODY_CONTAINS_TAG = "[contains]";
+      const string REPLACE_TAG = "[replace]";
       private static void ParseRules(string rulesFile)
         {
             _responseMap.Clear();
@@ -184,11 +185,12 @@ namespace MockServer
             {
                 lock (rulesFileLock)
                 {
-                    using (StreamReader sr = new StreamReader(new FileStream(rulesFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
+                    using (StreamReader sr = new StreamReader(new FileStream(rulesFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite),Encoding.Default))
                     {
                         while (!sr.EndOfStream)
                         {
-                            var rule = sr.ReadLine().Split(new char[] { '\t' });
+                            //string readline = System.Text.Encoding.Default.GetString(System.Text.Encoding.Default.GetBytes(sr.ReadLine()));
+                            var rule = (sr.ReadLine().Split(new char[] { '\t' }));
                             if (rule.Length > 0 && !rule[0].TrimStart().StartsWith("#"))
                             {
                                 #region URL AND MAP FILE
@@ -208,6 +210,7 @@ namespace MockServer
                                                                         FileUri = new FileInfo[] { new FileInfo(responseFile) }
                                                                     };
                                         }
+                                        
                                         else
                                         {
                                             ehr = new ExpectHttpResponseMap()
@@ -245,6 +248,14 @@ namespace MockServer
                                     if ((rule.Length - 1) >= 1 && GetDelay(rule[rule.Length - 1], out delay))
                                     {
                                         ehr.AdditionalDelay = delay;
+                                    }
+                                    //Parse replace
+                                    string[] words = new string[3];
+                                    if ((rule.Length - 1) >= 1 && GetReplaceWords(rule[1], out words)) {
+                                        ehr.ReplaceCharacaters = new string[3];
+                                        ehr.ReplaceCharacaters[0] = words[0];
+                                        ehr.ReplaceCharacaters[1] = words[1];
+                                        ehr.ReplaceCharacaters[2] = words[2];
                                     }
 
                                     if (mockUrl.StartsWith("["))
@@ -293,6 +304,7 @@ namespace MockServer
                                 }
                                 #endregion
                             }
+
                         }
                     }
 
@@ -366,6 +378,7 @@ namespace MockServer
               finalResp = new ExpectHttpResponse();
 
           }
+          finalResp.ReplaceCharacaters = map.ReplaceCharacaters;
           finalResp.AdditionalDelay = map.AdditionalDelay;
           return finalResp;
       
@@ -452,7 +465,37 @@ namespace MockServer
               result = true;
           }
           return result;
+          
+      }
+      //get replace words
+      private static bool GetReplaceWords(string rule,out string[] words)
+      {
+          string[] characters = new string[3];
+          words = characters;
+          var result = false;
+          if (rule.StartsWith("[replace") && rule.Contains("[with]"))
+          {
+              string word = rule.Substring(rule.IndexOf("[with]") + 6);
+              string word_replace = rule.Substring(rule.IndexOf("]") + 1, rule.IndexOf("[with]") - rule.IndexOf("]")-1);
+              characters[0] = word_replace;
+              characters[1] = word;
+              if(rule.StartsWith("[replaceStr]"))
+              {
+                characters[2] = "str";
+              }
+              else
+              {
+                 characters[2] = "regex"; 
+              }
+              result = true;
+          }
 
+          if (characters.Length > 0) {
+              for (int i = 0; i < characters.Length; i++) {
+                  words[i] = characters[i];
+              }   
+          }
+          return result;
       }
     }
 

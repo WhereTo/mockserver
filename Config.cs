@@ -9,7 +9,7 @@ namespace MockServer
 {
    public class Config
     {
-     public  static bool ENABLE_CONVERT_SERVICE = bool.Parse(ConfigurationManager.AppSettings["EnableConvertService"]);
+     public static bool ENABLE_CONVERT_SERVICE = bool.Parse(ConfigurationManager.AppSettings["EnableConvertService"]);
      public static Uri CONVERT_REQ_SERVICE_URL = new Uri(ConfigurationManager.AppSettings["ConvertReqServiceUrl"]);
      public static Uri CONVERT_RESP_SERVICE_URL = new Uri(ConfigurationManager.AppSettings["ConvertRespServiceUrl"]);
      public static ConvertMode CONVERT_MODE;

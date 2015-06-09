@@ -13,6 +13,7 @@ namespace MockServer.Model
        public WebHeaderCollection Header { get; set; }
        public byte[] Body { get; set; }
        public TimeSpan AdditionalDelay { get; set; }
+       public string[] ReplaceCharacaters { get; set; }
      
     }
    public class ExpectHttpResponseMap
@@ -22,11 +23,13 @@ namespace MockServer.Model
        public MapFileType Type { get; set; }
        public FileInfo[] FileUri { get; set; }
        private bool _enableConverter = false;
+       public string[] ReplaceCharacaters { get; set; }
        public bool EnableConverter 
        {
            get { return _enableConverter; } 
            set { _enableConverter = value; }
        }
+      
    }
    public enum MapFileType { One, Two,None }
 }

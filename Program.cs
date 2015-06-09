@@ -13,6 +13,8 @@ using Fiddler;
 using System.Threading;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
+using System.Xml;
 
 namespace WCF_REST
 {
@@ -52,7 +54,7 @@ namespace WCF_REST
         #endregion
       static string rulesFile = AppDomain.CurrentDomain.BaseDirectory + "Rules.txt";
        
-      internal  static RuleParser Rule = new RuleParser(rulesFile);
+      internal  static RuleParser Rule = new RuleParser(rulesFile); 
       static void Main(string[] args)
       {
          
@@ -84,10 +86,29 @@ namespace WCF_REST
            oS.bBufferResponse = true;
             
        };
-         
+          string encoding = null;
+          string result = null;
           Fiddler.FiddlerApplication.BeforeResponse += delegate(Fiddler.Session oS)
           {
               var reqBody = oS.GetRequestBodyAsString();
+              result = oS.GetResponseBodyAsString();
+              //get encode type
+              encoding = oS.oRequest.headers["Accept-Charset"];
+              if (encoding == null || encoding == "") 
+              {
+                  
+                  string type = oS.oRequest.headers["Accept"];
+                  if(type.Contains("text/html"))
+                  {
+                      Match meta = Regex.Match(result, "<meta([^<]*)charset=([^<]*)[\"']", RegexOptions.IgnoreCase | RegexOptions.Multiline);
+                      encoding = (meta.Groups.Count > 2) ? meta.Groups[2].Value : string.Empty;
+                      if (encoding.StartsWith("\""))
+                      {
+                          encoding = encoding.Substring(1);
+                      }
+                  }
+                  
+              }  
               bool needCallConvert =false;
               if (Config.ENABLE_CONVERT_SERVICE)
               {
@@ -106,18 +127,21 @@ namespace WCF_REST
                       }
                   }
               }
+           
               var expectResp = Rule.GetExpectHttpResponse(new Uri(oS.fullUrl), oS.RequestMethod, reqBody);
-             
+
               if (expectResp != null)
               {
                   var finalRespBody = expectResp.Body;
-                 // TODO:Convert resp body before returing resp
-                  if (finalRespBody != null && Config.ENABLE_CONVERT_SERVICE && (needCallConvert&&(Config.CONVERT_MODE == ConvertMode.Both || Config.CONVERT_MODE == ConvertMode.RespOnly))) 
+                  // TODO:Convert resp body before returing resp
+                  if (finalRespBody != null && Config.ENABLE_CONVERT_SERVICE && (needCallConvert && (Config.CONVERT_MODE == ConvertMode.Both || Config.CONVERT_MODE == ConvertMode.RespOnly)))
                   {
                       // convert finalRespBody
                       WebClient wc = new WebClient();
-                      finalRespBody=wc.UploadData(Config.CONVERT_RESP_SERVICE_URL, finalRespBody);
+                      finalRespBody = wc.UploadData(Config.CONVERT_RESP_SERVICE_URL, finalRespBody);
                   }
+                 
+                  
                   var newHeader = new HTTPResponseHeaders();
                   newHeader.SetStatus(expectResp.StatusCode, "Fiddler-Generated");
                   if (expectResp.Header != null)
@@ -136,9 +160,32 @@ namespace WCF_REST
                   }
                   if (expectResp.AdditionalDelay.TotalMilliseconds > 0)
                   {
-                      Thread.Sleep(expectResp.AdditionalDelay);
+                     Thread.Sleep(expectResp.AdditionalDelay);
                   }
+                  if (expectResp.ReplaceCharacaters != null)
+                  {                      
+                      if (expectResp.ReplaceCharacaters[2].Equals("str"))
+                      {
+                          result = result.Replace(expectResp.ReplaceCharacaters[0], expectResp.ReplaceCharacaters[1]);
+                      }
+                      else
+                      {
+                          Regex regex = new Regex(expectResp.ReplaceCharacaters[0]);
+                          result = regex.Replace(result, expectResp.ReplaceCharacaters[1]);
+                      }
+                      if (result != null && result!="")
+                      {
+                          if (encoding == null || encoding == "")
+                          {
+                              encoding = "utf-8";
+                          }
+                          var resultArray = System.Text.Encoding.GetEncoding(encoding).GetBytes(result);
+                          oS.utilAssignResponse(newHeader, resultArray);
+                      }
+                  }
+                  
               }
+              
           };
 
           Fiddler.FiddlerApplication.Startup(iPort, oFCSF);
